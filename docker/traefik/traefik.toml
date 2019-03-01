@@ -1,0 +1,17 @@
+debug = true
+defaultEntryPoints = ["http"]
+
+# Enable Web UI
+[web]
+  address = ":8080"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+
+[docker]
+  domain = "fifatracker.localhost"
+  watch = true
+  exposedbydefault = false
+
+[accessLogs]
