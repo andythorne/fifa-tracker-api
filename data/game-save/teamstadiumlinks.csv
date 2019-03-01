@@ -1,0 +1,745 @@
+stadiumname,stadiumid,teamid,forcedhome
+Emirates Stadium,156,1,0
+Villa Park,115,2,0
+_Ivy Lane,180,3,0
+_Sanderson Park (FIFA 13 NEW generic),261,4,0
+Stamford Bridge,28,5,0
+Goodison Park,265,7,0
+_Eastpoint Arena (Football Ground),194,8,0
+Anfield,13,9,0
+Etihad Stadium,246,10,0
+Old Trafford,1,11,0
+Riverside Stadium,349,12,0
+St. James' Park,100,13,0
+_Forest Park Stadium (Square Ground),26,14,0
+Loftus Road,337,15,0
+St. Mary's Stadium,113,17,0
+Wembley Stadium,155,18,0
+London Stadium (Olympic Stadium),355,19,0
+Allianz Arena,137,21,0
+_Waldstadion (Fussballstadion),176,22,0
+BORUSSIA-PARK,343,23,0
+_Ivy Lane,180,25,0
+_Stade Municipal,179,27,0
+Volksparkstadion (Imtech Arena),41,28,0
+_Stadion Europa,147,29,0
+_Waldstadion (Fussballstadion),176,31,0
+_Stadion Europa,147,32,0
+Veltins Arena,30,34,0
+_Waldstadion (Fussballstadion),176,36,0
+_Waldstadion (Fussballstadion),176,38,0
+_Stadio Classico,193,39,0
+San Siro,5,44,0
+Allianz Stadium (Juventus Stadium),247,45,0
+Stadio Olimpico,157,46,0
+San Siro,5,47,0
+_Stadion Olympik,195,48,0
+_Arena d'Oro,229,50,0
+Stadio Olimpico,157,52,0
+_O Dromo,197,54,0
+_Stadion Neder,178,55,0
+_Forest Park Stadium (Square Ground),26,57,0
+_Waldstadion (Fussballstadion),176,59,0
+_Court Lane,228,62,0
+_Ivy Lane,180,64,0
+_Waldstadion (Fussballstadion),176,65,0
+_Waldstadion (Fussballstadion),176,66,0
+_Ivy Lane,180,68,0
+_Union Park (Euro Arena),33,69,0
+_Forest Park Stadium (Square Ground),26,70,0
+_Estadio de las Artes (Generic Stadium NG),158,71,0
+_Waldstadion (Fussballstadion),176,72,0
+Parc des Princes,14,73,0
+_Stade Municipal,179,74,0
+_Stade Municipal,179,76,0
+_Ivy Lane,180,77,0
+_Eastpoint Arena (Football Ground),194,78,0
+_Ivy Lane,180,80,0
+_Ivy Lane,180,81,0
+_Ivy Lane,180,82,0
+_Ivy Lane,180,83,0
+_Eastpoint Arena (Football Ground),194,86,0
+_Stade Municipal,179,88,0
+_Forest Park Stadium (Square Ground),26,89,0
+_Molton Road (Sheldon Stadium),249,91,0
+_Town Park,34,92,0
+_Ivy Lane,180,94,0
+King Power Stadium,335,95,0
+_Ivy Lane,180,97,0
+Stadium of Light,326,106,0
+The Hawthorns,327,109,0
+_Ivy Lane,180,110,0
+,158,111,0
+,158,112,0
+_Court Lane,228,121,0
+_Court Lane,228,127,0
+_Town Park,34,135,0
+_Molton Road (Sheldon Stadium),249,142,0
+_Town Park,34,143,0
+_Court Lane,228,144,0
+_Crown Lane,32,149,0
+_Ivy Lane,180,159,0
+_Stadion Neder,178,160,0
+_Court Lane,228,165,0
+Olympiastadion,135,166,0
+_Ivy Lane,180,169,0
+_Stadion Olympik,195,171,0
+_Estadio de las Artes (Generic Stadium NG),158,172,0
+_Waldstadion (Fussballstadion),176,175,0
+_Court Lane,228,180,0
+_Town Park,34,184,0
+_Stadio Classico,193,189,0
+_Stadion 23. Maj,182,190,0
+_Waldstadion (Fussballstadion),176,191,0
+_O Dromo,197,192,0
+_Crown Lane,32,199,0
+_Stadion 23. Maj,182,200,0
+_Crown Lane,32,205,0
+_O Dromo,197,206,0
+_Stadion Neder,178,209,0
+_Stade Municipal,179,210,0
+_Court Lane,228,212,0
+_Stade Municipal,179,217,0
+Stade Vélodrome,29,219,0
+_Forest Park Stadium (Square Ground),26,224,0
+_Waldstadion (Fussballstadion),176,226,0
+_Stade Municipal,179,229,0
+_Court Lane,228,230,0
+_Waldstadion (Fussballstadion),176,231,0
+_Waldstadion (Fussballstadion),176,232,0
+_Waldstadion (Fussballstadion),176,234,0
+_Estadio de las Artes (Generic Stadium NG),158,236,0
+_Waldstadion (Fussballstadion),176,237,0
+Wanda Metropolitano,364,240,0
+_El Libertador (La Bombastico),192,241,0
+_Waldstadion (Fussballstadion),176,242,0
+Santiago Bernabéu,2,243,0
+_El Libertador (La Bombastico),192,244,0
+Amsterdam ArenA,15,245,0
+_Eastpoint Arena (Football Ground),194,246,0
+_Waldstadion (Fussballstadion),176,247,0
+_Union Park (Euro Arena),33,252,0
+_Molton Road (Sheldon Stadium),249,254,0
+_Court Lane,228,256,0
+_Estadio Presidente G.Lopes,212,260,0
+_Waldstadion (Fussballstadion),176,267,0
+_Waldstadion (Fussballstadion),176,269,0
+_Crown Lane,32,270,0
+_Euro Park,35,271,0
+_Court Lane,228,272,0
+_Stadion Olympik,195,278,0
+_Stadion Neder,178,280,0
+_Forest Park Stadium (Square Ground),26,294,0
+_Forest Park Stadium (Square Ground),26,298,0
+_Stadion Neder,178,299,0
+_Stadion Neder,178,300,0
+_Town Park,34,305,0
+_Town Park,34,306,0
+_Ivy Lane,180,312,0
+_Stadion Europa,147,315,0
+_Stadion Neder,178,319,0
+_Stade Municipal,179,320,0
+_Stade Municipal,179,321,0
+_Union Park (Euro Arena),33,322,0
+_Sanderson Park (FIFA 13 NEW generic),261,325,0
+_Waldstadion (Fussballstadion),176,326,0
+_Waldstadion (Fussballstadion),176,327,0
+_Town Park,34,346,0
+_Town Park,34,357,0
+_Town Park,34,361,0
+_Court Lane,228,378,0
+_Stade Municipal,179,379,0
+_El Grandioso (El Monumento),181,383,0
+_Stadion 23. Maj,182,393,0
+_Stadion Neder,178,417,0
+_Town Park,34,418,0
+_Euro Park,35,420,0
+_Town Park,34,422,0
+_Town Park,34,423,0
+_Waldstadion (Fussballstadion),176,433,0
+_Union Park (Euro Arena),33,436,0
+_Town Park,34,445,0
+_Waldstadion (Fussballstadion),176,448,0
+_El Libertador (La Bombastico),192,449,0
+_Stadio Classico,193,450,0
+_Waldstadion (Fussballstadion),176,452,0
+_O Dromo,197,457,0
+_Stade Municipal,179,459,0
+_El Libertador (La Bombastico),192,461,0
+_Waldstadion (Fussballstadion),176,462,0
+_Stade Municipal,179,463,0
+_Crown Lane,32,467,0
+_El Grandioso (El Monumento),181,472,0
+_Stadion Neder,178,477,0
+_Ivy Lane,180,479,0
+_Crown Lane,32,480,0
+_El Libertador (La Bombastico),192,481,0
+_Ivy Lane,180,483,0
+_Waldstadion (Fussballstadion),176,485,0
+_Crown Lane,32,487,0
+_Stadion Neder,178,492,0
+_Stade Municipal,179,503,0
+_Crown Lane,32,506,0
+_Stadion Neder,178,507,0
+_O Dromo,197,517,0
+_Arena d'Oro,229,518,0
+_Union Park (Euro Arena),33,531,0
+_Stade Municipal,179,543,0
+_Town Park,34,550,0
+_Town Park,34,561,0
+_Town Park,34,563,0
+_O Dromo,197,567,0
+_O Dromo,197,568,0
+_Stadion 23. Maj,182,570,0
+_El Libertador (La Bombastico),192,573,0
+_Crown Lane,32,576,0
+_El Grandioso (El Monumento),181,598,0
+King Fahd Stadium,262,605,0
+King Abdullah Sports City,345,607,0
+_Court Lane,228,614,0
+_Court Lane,228,631,0
+_Molton Road (Sheldon Stadium),249,650,0
+_Arena d'Oro,229,665,0
+_Euro Park,35,666,0
+_Court Lane,228,670,0
+_Waldstadion (Fussballstadion),176,673,0
+_Waldstadion (Fussballstadion),176,674,0
+_Forest Park Stadium (Square Ground),26,680,0
+_Court Lane,228,682,0
+_Arena del Centenario (Estadio del Pueblo),175,687,0
+_O Dromo,197,688,0
+_Waldstadion (Fussballstadion),176,689,0
+_Estadio de las Artes (Generic Stadium NG),158,691,0
+_Crown Lane,32,693,0
+_Crown Lane,32,694,0
+_Arena d'Oro,229,695,0
+_Stadion Neder,178,696,0
+StubHub Center,161,697,0
+_Stadio Classico,193,698,0
+_Stade Municipal,179,700,0
+_Stade Municipal,179,702,0
+_Crown Lane,32,705,0
+_Forest Park Stadium (Square Ground),26,708,0
+_Waldstadion (Fussballstadion),176,710,0
+_Stadion Neder,178,711,0
+_Stadion Olympik,195,741,0
+_Stadio Classico,193,742,0
+_Arena d'Oro,229,744,0
+_Waldstadion (Fussballstadion),176,819,0
+_Molton Road (Sheldon Stadium),249,820,0
+_Town Park,34,837,0
+_Town Park,34,838,0
+_Sanderson Park (FIFA 13 NEW generic),261,873,0
+_Union Park (Euro Arena),33,894,0
+_Stadion Europa,147,896,0
+_Molton Road (Sheldon Stadium),249,897,0
+_Molton Road (Sheldon Stadium),249,898,0
+_Waldstadion (Fussballstadion),176,900,0
+_Stadion Neder,178,917,0
+_Forest Park Stadium (Square Ground),26,919,0
+_Eastpoint Arena (Football Ground),194,920,0
+_Crown Lane,32,922,0
+_Estadio de las Artes (Generic Stadium NG),158,982,0
+_Estadio de las Artes (Generic Stadium NG),158,983,0
+_Estadio Presidente G.Lopes,212,1013,0
+_Estadio Presidente G.Lopes,212,1028,0
+_Sanderson Park (FIFA 13 NEW generic),261,1032,0
+_Stade Municipal,179,1035,0
+_Estadio Presidente G.Lopes,212,1039,0
+_Estadio Presidente G.Lopes,212,1053,0
+,158,1060,0
+,158,1061,0
+,158,1062,0
+,158,1063,0
+,158,1064,0
+,158,1065,0
+,158,1066,0
+,158,1067,0
+,158,1068,0
+Wembley Stadium,155,1318,0
+_Stadion Olympik,195,1322,0
+_Stadion Olympik,195,1325,0
+_Stadion 23. Maj,182,1327,0
+_Stadion Neder,178,1330,0
+_Waldstadion (Fussballstadion),176,1331,0
+_Stadion Olympik,195,1334,0
+_Stadion Olympik,195,1335,0
+Olympiastadion,135,1337,0
+_Stadion Neder,178,1338,0
+_Union Park (Euro Arena),33,1341,0
+Stadio Olimpico,157,1343,0
+_Eastpoint Arena (Football Ground),194,1352,0
+_Sanderson Park (FIFA 13 NEW generic),261,1353,0
+_Waldstadion (Fussballstadion),176,1354,0
+_Sanderson Park (FIFA 13 NEW generic),261,1355,0
+_Waldstadion (Fussballstadion),176,1356,0
+_Waldstadion (Fussballstadion),176,1357,0
+_Stadion Olympik,195,1359,0
+_Molton Road (Sheldon Stadium),249,1361,0
+Santiago Bernabéu,2,1362,0
+_Forest Park Stadium (Square Ground),26,1363,0
+_Waldstadion (Fussballstadion),176,1364,0
+_Union Park (Euro Arena),33,1365,0
+_Ivy Lane,180,1367,0
+El Monumental,344,1369,0
+_O Dromo,197,1370,0
+_Stadio Classico,193,1375,0
+_El Libertador (La Bombastico),192,1377,0
+Estadio Azteca,104,1386,0
+CenturyLink Field,341,1387,0
+_Aloha Park,153,1395,0
+_Stadion Olympik,195,1413,0
+_Stadion Hanguk,196,1415,0
+_Waldstadion (Fussballstadion),176,1439,0
+_Molton Road (Sheldon Stadium),249,1446,0
+_Town Park,34,1447,0
+_Crown Lane,32,1456,0
+_Euro Park,35,1463,0
+_Town Park,34,1465,0
+_Waldstadion (Fussballstadion),176,1473,0
+_Waldstadion (Fussballstadion),176,1474,0
+_Town Park,34,1475,0
+_Forest Park Stadium (Square Ground),26,1477,0
+_Estadio de las Artes (Generic Stadium NG),158,1478,0
+_Crown Lane,32,1480,0
+_Stadion Neder,178,1516,0
+_Town Park,34,1530,0
+_Euro Park,35,1569,0
+_Town Park,34,1571,0
+_Town Park,34,1572,0
+_Crown Lane,32,1596,0
+_O Dromo,197,1629,0
+_Stadion Neder,178,1715,0
+_Arena del Centenario (Estadio del Pueblo),175,1719,0
+_Waldstadion (Fussballstadion),176,1738,0
+_Euro Park,35,1746,0
+_Town Park,34,1754,0
+_Court Lane,228,1755,0
+_Crown Lane,32,1757,0
+_Town Park,34,1785,0
+_Stadion 23. Maj,182,1786,0
+_Molton Road (Sheldon Stadium),249,1788,0
+Fratton Park,112,1790,0
+Carrow Road,329,1792,0
+_Molton Road (Sheldon Stadium),249,1793,0
+_Ivy Lane,180,1794,0
+Vicarage Road,347,1795,0
+Turf Moor,336,1796,0
+_Molton Road (Sheldon Stadium),249,1797,0
+_Molton Road (Sheldon Stadium),249,1798,0
+Selhurst Park,330,1799,0
+_Molton Road (Sheldon Stadium),249,1800,0
+_Ivy Lane,180,1801,0
+_Court Lane,228,1802,0
+_Court Lane,228,1803,0
+_Ivy Lane,180,1804,0
+Britannia Stadium (Stoke City Football Stadium),331,1806,0
+_Forest Park Stadium (Square Ground),26,1807,0
+The Amex Stadium,340,1808,0
+_Waldstadion (Fussballstadion),176,1809,0
+_Euro Park,35,1813,0
+_Town Park,34,1815,0
+_Stadion Neder,178,1816,0
+_Ivy Lane,180,1819,0
+_Stade Municipal,179,1823,0
+_Waldstadion (Fussballstadion),176,1824,0
+_Waldstadion (Fussballstadion),176,1825,0
+_Court Lane,228,1831,0
+_Union Park (Euro Arena),33,1832,0
+_Stadion Europa,147,1837,0
+_Stadion Neder,178,1842,0
+_Stadio Classico,193,1843,0
+_Arena d'Oro,229,1847,0
+_Stadion Olympik,195,1848,0
+_Stadio Classico,193,1853,0
+_Estadio El Medio,183,1854,0
+_Stadio Classico,193,1860,0
+_Arena d'Oro,229,1861,0
+_Euro Park,35,1862,0
+_Stade Municipal,179,1867,0
+_Waldstadion (Fussballstadion),176,1871,0
+_Stade Municipal,179,1873,0
+El Monumental,344,1876,0
+La Bombonera,264,1877,0
+_Stadio Classico,193,1878,0
+Estadio Azteca,104,1879,0
+_Stadion Olympik,195,1880,0
+_El Grandioso (El Monumento),181,1881,0
+_Stadion Europa,147,1882,0
+_Stadion Olympik,195,1884,0
+_Stadion Neder,178,1886,0
+_Stade Municipal,179,1887,0
+_Union Park (Euro Arena),33,1889,0
+_Crown Lane,32,1892,0
+_Stadion Neder,178,1893,0
+_Stadio Classico,193,1896,0
+_Stade Municipal,179,1898,0
+_Court Lane,228,1900,0
+_Molton Road (Sheldon Stadium),249,1902,0
+_Ivy Lane,180,1903,0
+_Stadion Neder,178,1904,0
+_Stadion Neder,178,1906,0
+_Stadion Neder,178,1907,0
+_Waldstadion (Fussballstadion),176,1908,0
+_Stade Municipal,179,1909,0
+_Waldstadion (Fussballstadion),176,1913,0
+_Crown Lane,32,1914,0
+_Waldstadion (Fussballstadion),176,1915,0
+_Ivy Lane,180,1917,0
+_Court Lane,228,1919,0
+_Court Lane,228,1920,0
+_Court Lane,228,1923,0
+_Court Lane,228,1924,0
+_Court Lane,228,1925,0
+_Molton Road (Sheldon Stadium),249,1926,0
+_Court Lane,228,1928,0
+_Molton Road (Sheldon Stadium),249,1929,0
+_Court Lane,228,1930,0
+_Ivy Lane,180,1932,0
+_Court Lane,228,1933,0
+_Court Lane,228,1934,0
+_Court Lane,228,1935,0
+_Court Lane,228,1936,0
+_Ivy Lane,180,1937,0
+_Court Lane,228,1938,0
+Kirklees Stadium,384,1939,0
+_Court Lane,228,1940,0
+Vitality Stadium (Goldsands Stadium),348,1943,0
+_Town Park,196,1944,0
+_Court Lane,228,1945,0
+_Court Lane,228,1949,0
+_Court Lane,228,1951,0
+The KC Stadium,332,1952,0
+_Court Lane,228,1954,0
+_Crown Lane,32,1955,0
+Liberty Stadium,333,1960,0
+_Molton Road (Sheldon Stadium),249,1961,0
+_Court Lane,228,1962,0
+_Estadio El Medio,183,1968,0
+_El Libertador (La Bombastico),192,1970,0
+_Court Lane,228,1971,0
+_Ivy Lane,180,2007,0
+_Town Park,34,2013,0
+_Town Park,34,2026,0
+_Stadio Classico,193,2038,0
+_Euro Park,35,2055,0
+_Stadion Hanguk,196,2056,0
+,158,2500,0
+,158,2501,0
+,158,2502,0
+,158,2503,0
+,158,2504,0
+,158,2505,0
+,158,2506,0
+,158,2507,0
+,158,2508,0
+,158,2509,0
+,158,2510,0
+_Town Park,34,10019,0
+_Arena del Centenario (Estadio del Pueblo),175,10020,0
+_Stadion Neder,178,10029,0
+_Molton Road (Sheldon Stadium),249,10030,0
+_Town Park,34,10031,0
+_Euro Park,35,10032,0
+_Euro Park,35,15001,0
+_Union Park (Euro Arena),33,15005,0
+_Town Park,34,15009,0
+_Stadion Neder,178,15012,0
+_Court Lane,228,15015,0
+_Stadio Classico,193,15019,0
+_El Grandioso (El Monumento),181,15029,0
+_Court Lane,228,100081,0
+_Court Lane,228,100325,0
+_Stadion Neder,178,100409,0
+_Euro Park,35,100424,0
+_Stadion Neder,178,100634,0
+_Stadion Neder,178,100646,0
+_Court Lane,228,100651,0
+_Waldstadion (Fussballstadion),176,100765,0
+_Stadion Neder,178,100766,0
+_Waldstadion (Fussballstadion),176,100767,0
+_Sanderson Park (FIFA 13 NEW generic),261,100769,0
+_Court Lane,228,100804,0
+_Town Park,34,100831,0
+_Stadion 23. Maj,182,100888,0
+_Stadion Neder,178,101014,0
+_Sanderson Park (FIFA 13 NEW generic),261,101020,0
+_Stadion Neder,178,101025,0
+_Forest Park Stadium (Square Ground),26,101026,0
+_Union Park (Euro Arena),33,101033,0
+_Stadion 23. Maj,182,101041,0
+Donbass Arena,260,101059,0
+_Stadion Olympik,195,101083,0
+_Stadio Classico,193,101084,0
+_O Dromo,197,101085,0
+_Estadio El Medio,183,101088,0
+_Stadion Neder,178,101097,0
+_O Dromo,197,101099,0
+_El Libertador (La Bombastico),192,101100,0
+_O Dromo,197,101101,0
+_Estadio de las Artes (Generic Stadium NG),158,101102,0
+_El Libertador (La Bombastico),192,101103,0
+_Stadio Classico,193,101104,0
+_Stadio Classico,193,101105,0
+_O Dromo,197,101106,0
+BC Place Stadium,248,101112,0
+_O Dromo,197,101114,0
+_Waldstadion (Fussballstadion),176,101121,0
+_Crown Lane,32,101144,0
+_Stadion 23. Maj,182,101145,0
+_Sanderson Park (FIFA 13 NEW generic),261,101146,0
+_Estadio de las Artes (Generic Stadium NG),158,101147,0
+_Stadion Hanguk,196,101148,0
+_Stade Municipal,179,101149,0
+_Stadion Olympik,195,101150,0
+_Stadion Olympik,195,101151,0
+Amsterdam ArenA,15,105035,0
+_Stadio Classico,193,110062,0
+_Molton Road (Sheldon Stadium),249,110081,0
+_El Libertador (La Bombastico),192,110093,0
+_Euro Park,35,110101,0
+_Eastpoint Arena (Football Ground),194,110109,0
+_Estadio El Medio,183,110144,0
+_Stadio Classico,193,110145,0
+_Stade Municipal,179,110147,0
+_Stadio Classico,193,110150,0
+_Stadion Olympik,195,110152,0
+_Euro Park,35,110169,0
+_Court Lane,228,110178,0
+_Stadion 23. Maj,182,110197,0
+_Stadion Europa,147,110227,0
+_Stadion 23. Maj,182,110231,0
+_Stadion 23. Maj,182,110234,0
+_Town Park,34,110313,0
+_Town Park,34,110316,0
+_Euro Park,35,110326,0
+_Ivy Lane,180,110329,0
+_Stadio Classico,193,110373,0
+_Stadio Classico,193,110374,0
+_Arena del Centenario (Estadio del Pueblo),175,110394,0
+_Estadio Presidente G.Lopes,212,110395,0
+_Estadio El Medio,183,110396,0
+_Arena del Centenario (Estadio del Pueblo),175,110398,0
+_Estadio Presidente G.Lopes,212,110404,0
+_Arena del Centenario (Estadio del Pueblo),175,110405,0
+_Stadio Classico,193,110406,0
+_Waldstadion (Fussballstadion),176,110456,0
+_Stadion Neder,178,110482,0
+_Union Park (Euro Arena),33,110500,0
+_Stadion 23. Maj,182,110502,0
+_Stadion Europa,147,110556,0
+_Ivy Lane,180,110569,0
+_Euro Park,35,110576,0
+_Stadio Classico,193,110580,0
+_Arena del Centenario (Estadio del Pueblo),175,110581,0
+_Stadion Neder,178,110588,0
+_Stadion 23. Maj,182,110591,0
+_Court Lane,228,110592,0
+_Town Park,34,110597,0
+_Sanderson Park (FIFA 13 NEW generic),261,110636,0
+_Union Park (Euro Arena),33,110694,0
+_Euro Park,35,110700,0
+_Stadio Classico,193,110704,0
+_Town Park,34,110714,0
+_Crown Lane,32,110724,0
+_Crown Lane,32,110734,0
+_Town Park,34,110741,0
+_Waldstadion (Fussballstadion),176,110745,0
+_Euro Park,35,110746,0
+_Molton Road (Sheldon Stadium),249,110747,0
+_Stadion Neder,178,110749,0
+_Euro Park,35,110756,0
+_Estadio de las Artes (Generic Stadium NG),158,110765,0
+_Court Lane,228,110770,0
+_Stadio Classico,193,110781,0
+_Town Park,34,110822,0
+_Stadion Europa,147,110827,0
+_Court Lane,228,110831,0
+_Stadio Classico,193,110832,0
+_Town Park,34,110839,0
+_Town Park,34,110854,0
+_Town Park,34,110890,0
+_Stadio Classico,193,110911,0
+_Court Lane,228,110913,0
+_Stade Municipal,179,110915,0
+_Estadio Presidente G.Lopes,212,110929,0
+_Waldstadion (Fussballstadion),176,110930,0
+_Stadio Classico,193,110975,0
+_Arena d'Oro,229,110976,0
+_Estadio El Medio,183,110977,0
+_Estadio El Medio,183,110980,0
+_Arena del Centenario (Estadio del Pueblo),175,111019,0
+_O Dromo,197,111022,0
+_Union Park (Euro Arena),33,111035,0
+_Estadio El Medio,183,111043,0
+_Estadio Presidente G.Lopes,212,111044,0
+_Estadio Presidente G.Lopes,212,111057,0
+_Stadio Classico,193,111065,0
+_El Libertador (La Bombastico),192,111072,0
+_Stadion Neder,178,111082,0
+_Waldstadion (Fussballstadion),176,111083,0
+_Molton Road (Sheldon Stadium),249,111086,0
+_Sanderson Park (FIFA 13 NEW generic),261,111091,0
+_Waldstadion (Fussballstadion),176,111092,0
+_Estadio Presidente G.Lopes,212,111099,0
+_O Dromo,197,111108,0
+_O Dromo,197,111109,0
+_Aloha Park,153,111112,0
+King Fahd Stadium,262,111114,0
+_El Grandioso (El Monumento),181,111130,0
+_Town Park,34,111131,0
+_Estadio de las Artes (Generic Stadium NG),158,111138,0
+_Molton Road (Sheldon Stadium),249,111139,0
+_Stadion Neder,178,111140,0
+CenturyLink Field,341,111144,0
+_Molton Road (Sheldon Stadium),249,111235,0
+_Stadion Neder,178,111239,0
+_Town Park,34,111264,0
+_Town Park,34,111285,0
+_Court Lane,228,111327,0
+_Arena d'Oro,229,111328,0
+_Stadio Classico,193,111339,0
+_Stadion Neder,178,111340,0
+_Court Lane,228,111379,0
+_Estadio El Medio,183,111393,0
+_Waldstadion (Fussballstadion),176,111395,0
+_Crown Lane,32,111396,0
+_Stade Municipal,179,111397,0
+_Forest Park Stadium (Square Ground),26,111398,0
+_Forest Park Stadium (Square Ground),26,111399,0
+_Estadio de las Artes (Generic Stadium NG),158,111400,0
+_Arena del Centenario (Estadio del Pueblo),175,111434,0
+_El Grandioso (El Monumento),181,111451,0
+_Stadion 23. Maj,182,111455,0
+_El Grandioso (El Monumento),181,111459,0
+_Union Park (Euro Arena),33,111465,0
+_O Dromo,197,111466,0
+_O Dromo,197,111473,0
+_Union Park (Euro Arena),33,111487,0
+_Court Lane,228,111560,0
+_Stadion Hanguk,196,111575,0
+_El Libertador (La Bombastico),192,111596,0
+_Stadion 23. Maj,182,111651,0
+_Stadion Neder,178,111657,0
+King Fahd Stadium,262,111674,0
+_Estadio El Medio,183,111678,0
+_Stadio Classico,193,111706,0
+_Estadio El Medio,183,111708,0
+_Arena del Centenario (Estadio del Pueblo),175,111710,0
+_El Libertador (La Bombastico),192,111711,0
+_Arena del Centenario (Estadio del Pueblo),175,111713,0
+_Stadion 23. Maj,182,111715,0
+_Estadio El Medio,183,111716,0
+_Stadion 23. Maj,182,111722,0
+_Stadio Classico,193,111723,0
+_Union Park (Euro Arena),33,111730,0
+_O Dromo,197,111766,0
+_Union Park (Euro Arena),33,111817,0
+_Stadion 23. Maj,182,111821,0
+_Euro Park,35,111822,0
+_Stade Municipal,179,111928,0
+_Crown Lane,32,111974,0
+_Arena d'Oro,229,111976,0
+_Town Park,34,111993,0
+_Stadio Classico,193,112026,0
+_Stadion Neder,178,112075,0
+Suita City Football Stadium,354,112093,0
+_Al Jayeed Stadium (Stade Kokoto),149,112096,0
+_Euro Park,35,112115,0
+_Arena d'Oro,229,112116,0
+_O Dromo,197,112119,0
+_Stadion Neder,178,112122,0
+_Town Park,34,112130,0
+_Stadio Classico,193,112134,0
+King Fahd Stadium,262,112139,0
+_Town Park,34,112171,0
+_Sanderson Park (FIFA 13 NEW generic),261,112172,0
+_Sanderson Park (FIFA 13 NEW generic),261,112190,0
+_Union Park (Euro Arena),33,112199,0
+_Sanderson Park (FIFA 13 NEW generic),261,112218,0
+_Stade Municipal,179,112224,0
+_Estadio El Medio,183,112225,0
+_Town Park,34,112254,0
+_Stadion Hanguk,196,112258,0
+_Town Park,34,112259,0
+_Crown Lane,32,112260,0
+,158,112264,0
+_Euro Park,35,112276,0
+_Stadion 23. Maj,182,112345,0
+King Abdullah Sports City,345,112387,0
+_Al Jayeed Stadium (Stade Kokoto),149,112389,0
+_Al Jayeed Stadium (Stade Kokoto),149,112390,0
+_Al Jayeed Stadium (Stade Kokoto),149,112391,0
+_Al Jayeed Stadium (Stade Kokoto),149,112392,0
+_Al Jayeed Stadium (Stade Kokoto),149,112393,0
+_Euro Park,35,112398,0
+_Town Park,34,112409,0
+_Town Park,34,112425,0
+_Union Park (Euro Arena),33,112427,0
+_Sanderson Park (FIFA 13 NEW generic),261,112444,0
+_Arena del Centenario (Estadio del Pueblo),175,112476,0
+_Town Park,34,112508,0
+_Town Park,34,112510,0
+_Euro Park,35,112516,0
+_Arena del Centenario (Estadio del Pueblo),175,112523,0
+_Stadion 23. Maj,182,112526,0
+_Estadio El Medio,183,112527,0
+_Arena d'Oro,229,112528,0
+_Arena d'Oro,229,112531,0
+_Arena d'Oro,229,112533,0
+_O Dromo,197,112534,0
+_Euro Park,35,112552,0
+_Arena del Centenario (Estadio del Pueblo),175,112578,0
+_Aloha Park,153,112579,0
+_Estadio Presidente G.Lopes,212,112584,0
+_Estadio de las Artes (Generic Stadium NG),158,112606,0
+_Arena del Centenario (Estadio del Pueblo),175,112655,0
+_Molton Road (Sheldon Stadium),249,112668,0
+_O Dromo,197,112670,0
+_Estadio Presidente G.Lopes,212,112709,0
+_Town Park,34,112791,0
+_Stadio Classico,193,112828,0
+_Stadion Neder,178,112836,0
+_Waldstadion (Fussballstadion),176,112885,0
+_Aloha Park,153,112903,0
+_Arena del Centenario (Estadio del Pueblo),175,112904,0
+_Stadion Hanguk,196,112906,0
+_O Dromo,197,112934,0
+_Molton Road (Sheldon Stadium),249,112958,0
+_Arena del Centenario (Estadio del Pueblo),175,112968,0
+_Al Jayeed Stadium (Stade Kokoto),149,112990,0
+_Union Park (Euro Arena),33,112992,0
+_Eastpoint Arena (Football Ground),194,112998,0
+_O Dromo,197,112999,0
+BC Place Stadium,248,113000,0
+_Stadion Olympik,195,113001,0
+Wembley Stadium,155,113002,0
+Parc des Princes,14,113003,0
+BORUSSIA-PARK,343,113004,0
+Stadio Olimpico,157,113005,0
+_Stadion Europa,147,113007,0
+_Stadion Neder,178,113008,0
+CenturyLink Field,341,113009,0
+Estadio Azteca,104,113010,0
+Amsterdam ArenA,15,113011,0
+Wanda Metropolitano,364,113012,0
+_Al Jayeed Stadium (Stade Kokoto),149,113057,0
+,158,113138,0
+,158,113139,0
+_Stadion Neder,178,113142,0
+_Town Park,34,113147,0
+,158,113154,0
+,158,113155,0
+_Stadion Hanguk,196,113157,0
+_Forest Park Stadium (Square Ground),26,113160,0
+_Euro Park,35,113162,0
+_Town Park,34,113173,0
+_Al Jayeed Stadium (Stade Kokoto),149,113219,0
+_Arena d'Oro,229,113258,0
+_Stadion 23. Maj,182,113259,0
+,158,113308,0
+,158,113309,0
+_Town Park,34,113458,0
+_Town Park,34,113459,0
+_Stadion 23. Maj,182,113704,0
+_Town Park,34,113720,0
