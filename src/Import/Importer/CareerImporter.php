@@ -2,7 +2,8 @@
 
 namespace App\Import\Importer;
 
-use App\Entity\Game\Career\Career;
+use App\Entity\Game\Career;
+use App\Entity\Game\Import\Import;
 use App\Entity\Game\Nation;
 use App\Import\CsvProcessor;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -29,11 +30,12 @@ class CareerImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function import(Career $career, string $path)
+    public function import(Import $import, string $path)
     {
         $file = $path.'career_users.csv';
 
         $nationalityRepository = $this->objectManager->getRepository(Nation::class);
+        $career = $import->getCareer();
 
         foreach ($this->csvProcessor->readLine($file) as $row) {
             $career->updateFromSave(

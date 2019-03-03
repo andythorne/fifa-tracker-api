@@ -2,8 +2,9 @@
 
 namespace App\Import\Importer;
 
-use App\Entity\Game\Career\Career;
-use App\Entity\Game\Career\CareerTeam;
+use App\Entity\Game\Career;
+use App\Entity\Game\Import\Team;
+use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -21,11 +22,11 @@ class TeamImporter implements ImporterInterface
         $this->csvProcessor = $csvProcessor;
     }
 
-    public function import(Career $career, string $path)
+    public function import(Import $import, string $path)
     {
         $file = $path.'teams.csv';
 
-        $careerTeamRepository = $this->objectManager->getRepository(CareerTeam::class);
+        $careerTeamRepository = $this->objectManager->getRepository(Team::class);
 
         foreach ($this->csvProcessor->readLine($file) as $row) {
             $teamId = (int) $row['teamid'];
@@ -33,9 +34,9 @@ class TeamImporter implements ImporterInterface
                 'gameId' => $teamId,
             ]);
 
-            if (!$currentRecord instanceof CareerTeam) {
-                yield new CareerTeam(
-                    $career,
+            if (!$currentRecord instanceof Team) {
+                yield new Team(
+                    $import,
                     $teamId,
                     $row['teamname'],
                     $row['foundationyear'],

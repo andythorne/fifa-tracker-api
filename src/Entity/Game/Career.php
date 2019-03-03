@@ -1,11 +1,7 @@
 <?php
 
-namespace App\Entity\Game\Career;
+namespace App\Entity\Game;
 
-use App\Entity\Game\GameIdTrait;
-use App\Entity\Game\GameVersion;
-use App\Entity\Game\GameVersionTrait;
-use App\Entity\Game\Nation;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;

@@ -2,11 +2,12 @@
 
 namespace App\Import\Importer;
 
-use App\Entity\Game\Career\Career;
+use App\Entity\Game\Career;
+use App\Entity\Game\Import\Import;
 
 interface ImporterInterface
 {
-    public function import(Career $career, string $path);
+    public function import(Import $import, string $path);
 
-    public function supports(Career $gameVersion);
+    public function supports(Career $career);
 }

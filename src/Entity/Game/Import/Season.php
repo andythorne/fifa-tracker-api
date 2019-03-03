@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Game\Career;
+namespace App\Entity\Game\Import;
 
 use App\Entity\Game\GameIdTrait;
 use App\Entity\Game\GameVersionTrait;
@@ -12,6 +12,7 @@ use Ramsey\Uuid\UuidInterface;
  */
 class Season
 {
+    use ImportAwareTrait;
     use GameIdTrait;
     use GameVersionTrait;
 

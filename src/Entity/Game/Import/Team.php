@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Game\Career;
+namespace App\Entity\Game\Import;
 
 use App\Entity\Game\GameIdTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,8 +10,9 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * @ORM\Entity()
  */
-class CareerTeam
+class Team
 {
+    use ImportAwareTrait;
     use GameIdTrait;
 
     /**
@@ -30,16 +31,6 @@ class CareerTeam
      * @ORM\Column(type="string")
      */
     private $name;
-
-    /**
-     * @var Career
-     *
-     * @ORM\ManyToOne(
-     *     targetEntity="Career",
-     *     inversedBy="id"
-     * )
-     */
-    private $career;
 
     /**
      * @var int
@@ -69,10 +60,10 @@ class CareerTeam
      */
     private $teamColour3;
 
-    public function __construct(Career $career, int $gameId, string $name, int $foundationYear, string $teamColour1, string $teamColour2, string $teamColour3)
+    public function __construct(Import $import, int $gameId, string $name, int $foundationYear, string $teamColour1, string $teamColour2, string $teamColour3)
     {
         $this->id = Uuid::uuid4();
-        $this->career = $career;
+        $this->import = $import;
         $this->gameId = $gameId;
         $this->name = $name;
         $this->foundationYear = $foundationYear;
@@ -84,11 +75,6 @@ class CareerTeam
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getCareer(): Career
-    {
-        return $this->career;
     }
 
     public function getTeamColour1(): string

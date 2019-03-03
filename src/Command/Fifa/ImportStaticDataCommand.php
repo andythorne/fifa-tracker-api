@@ -55,13 +55,13 @@ class ImportStaticDataCommand extends Command
         /** @var GameVersion $gameVersion */
         foreach ($gameVersionRepo->findAll() as $i => $gameVersion) {
             // Nations
-            foreach ($this->readData($path.$gameVersion->getYear().'_nations.csv') as $data) {
+            foreach ($this->csvProcessor->readLine($path.$gameVersion->getYear().'_nations.csv') as $data) {
                 $nation = new Nation(
                     $gameVersion,
-                    (int) $data[6],
-                    $data[1],
-                    strlen($data[0]) === 2 ? $data[0] : null,
-                    $data[3] === '1'
+                    (int) $data['nationid'],
+                    $data['nationname'],
+                    strlen($data['isocountrycode']) === 2 ? $data['isocountrycode'] : null,
+                    $data['top_tier'] === '1'
                 );
 
                 $this->objectManager->persist($nation);
@@ -79,8 +79,8 @@ class ImportStaticDataCommand extends Command
             foreach ($this->csvProcessor->readLine($path.$gameVersion->getYear().'_playernames.csv') as $i => $data) {
                 $playerName = new PlayerName(
                     $gameVersion,
-                    (int) $data[1],
-                    $data[0]
+                    (int) $data['nameid'],
+                    $data['name']
                 );
 
                 $this->objectManager->persist($playerName);
