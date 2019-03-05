@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity\Game;
+namespace App\Entity\Game\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait GameIdTrait
+trait GameIdAwareTrait
 {
     /**
      * @var int

@@ -2,9 +2,7 @@
 
 namespace App\Entity\Game\Import;
 
-use App\Entity\Game\Career;
-use App\Entity\Game\GameIdTrait;
-use App\Entity\Game\GameVersionTrait;
+use App\Entity\Game\Career\Career;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -15,9 +13,6 @@ use Ramsey\Uuid\UuidInterface;
  */
 class Import
 {
-    use GameVersionTrait;
-    use GameIdTrait;
-
     /**
      * @var UuidInterface
      *
@@ -43,18 +38,10 @@ class Import
     private $gameDate;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $isEndOfSeason;
-
-    /**
      * @var Career
      *
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Career\Career",
-     *     inversedBy="id"
+     *     targetEntity="App\Entity\Game\Career\Career"
      * )
      */
     private $career;
@@ -89,15 +76,5 @@ class Import
     public function setGameDate(DateTimeImmutable $gameDate): void
     {
         $this->gameDate = $gameDate;
-    }
-
-    public function isEndOfSeason(): bool
-    {
-        return $this->isEndOfSeason;
-    }
-
-    public function setIsEndOfSeason(bool $isEndOfSeason): void
-    {
-        $this->isEndOfSeason = $isEndOfSeason;
     }
 }

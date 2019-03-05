@@ -2,9 +2,9 @@
 
 namespace App\Command\Fifa;
 
+use App\Entity\Game\Core\Nation;
+use App\Entity\Game\Core\PlayerName;
 use App\Entity\Game\GameVersion;
-use App\Entity\Game\Nation;
-use App\Entity\Game\PlayerName;
 use App\Import\CsvProcessor;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;

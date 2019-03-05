@@ -10,8 +10,7 @@ trait ImportAwareTrait
      * @var Import
      *
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Game\Import\Import",
-     *     inversedBy="id"
+     *     targetEntity="App\Entity\Game\Import\Import"
      * )
      */
     protected $import;

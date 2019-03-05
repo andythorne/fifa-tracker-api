@@ -2,7 +2,7 @@
 
 namespace App\Command\Fifa;
 
-use App\Entity\Game\Import\Career;
+use App\Entity\Game\Career\Career;
 use App\Entity\Game\GameVersion;
 use App\Entity\User;
 use App\Import\SaveGameImportProcessor;

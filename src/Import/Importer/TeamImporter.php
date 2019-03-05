@@ -2,8 +2,8 @@
 
 namespace App\Import\Importer;
 
-use App\Entity\Game\Career;
-use App\Entity\Game\Import\Team;
+use App\Entity\Game\Career\Career;
+use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,13 +30,13 @@ class TeamImporter implements ImporterInterface
 
         foreach ($this->csvProcessor->readLine($file) as $row) {
             $teamId = (int) $row['teamid'];
-            $currentRecord = $careerTeamRepository->findOneBy([
-                'gameId' => $teamId,
-            ]);
+
+            /** @var Team $currentRecord */
+            $currentRecord = $careerTeamRepository->findOneByGameId($teamId);
 
             if (!$currentRecord instanceof Team) {
                 yield new Team(
-                    $import,
+                    $import->getCareer()->getGameVersion(),
                     $teamId,
                     $row['teamname'],
                     $row['foundationyear'],
@@ -48,8 +48,15 @@ class TeamImporter implements ImporterInterface
         }
     }
 
-    public function supports(Career $career)
+    public function supports(Career $career): bool
     {
         return $career->getGameVersion()->getYear() <= 18;
+    }
+
+    public function cleanup(): array
+    {
+        return [
+            Team::class,
+        ];
     }
 }

@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Entity\Game\Import;
+namespace App\Entity\Game\Core;
 
-use App\Entity\Game\GameIdTrait;
+use App\Entity\Game\GameVersion;
+use App\Entity\Game\Traits\GameIdAwareTrait;
+use App\Entity\Game\Traits\GameVersionAwareTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"})})
  */
 class Team
 {
-    use ImportAwareTrait;
-    use GameIdTrait;
+    use GameVersionAwareTrait;
+    use GameIdAwareTrait;
 
     /**
      * @var UuidInterface
@@ -60,10 +63,10 @@ class Team
      */
     private $teamColour3;
 
-    public function __construct(Import $import, int $gameId, string $name, int $foundationYear, string $teamColour1, string $teamColour2, string $teamColour3)
+    public function __construct(GameVersion $gameVersion, int $gameId, string $name, int $foundationYear, string $teamColour1, string $teamColour2, string $teamColour3)
     {
         $this->id = Uuid::uuid4();
-        $this->import = $import;
+        $this->gameVersion = $gameVersion;
         $this->gameId = $gameId;
         $this->name = $name;
         $this->foundationYear = $foundationYear;

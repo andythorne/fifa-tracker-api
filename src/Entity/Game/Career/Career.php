@@ -1,8 +1,14 @@
 <?php
 
-namespace App\Entity\Game;
+namespace App\Entity\Game\Career;
 
+use App\Entity\Game\Career\Season\Season;
+use App\Entity\Game\Core\Nation;
+use App\Entity\Game\GameVersion;
+use App\Entity\Game\Traits\GameIdAwareTrait;
+use App\Entity\Game\Traits\GameVersionAwareTrait;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -12,8 +18,8 @@ use Ramsey\Uuid\UuidInterface;
  */
 class Career
 {
-    use GameIdTrait;
-    use GameVersionTrait;
+    use GameIdAwareTrait;
+    use GameVersionAwareTrait;
 
     /**
      * @var UuidInterface
@@ -35,14 +41,14 @@ class Career
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $surname;
 
@@ -50,8 +56,7 @@ class Career
      * @var Nation
      *
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Game\Nation",
-     *     inversedBy="id"
+     *     targetEntity="App\Entity\Game\Core\Nation"
      * )
      */
     private $nationality;
@@ -60,17 +65,27 @@ class Career
      * @var User
      *
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\User",
-     *     inversedBy="id"
+     *     targetEntity="App\Entity\User"
      * )
      */
     private $user;
+
+    /**
+     * @var Season[]
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Game\Career\Season\Season",
+     *     mappedBy="career"
+     * )
+     */
+    private $seasons;
 
     public function __construct(GameVersion $gameVersion, User $user)
     {
         $this->id = Uuid::uuid4();
         $this->gameVersion = $gameVersion;
         $this->user = $user;
+        $this->seasons = new ArrayCollection();
     }
 
     public function updateFromSave(int $gameId, string $firstName, string $surname, Nation $nationality)
@@ -114,5 +129,15 @@ class Career
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getSeasons(): array
+    {
+        return $this->seasons;
+    }
+
+    public function getCurrentSeason(): Season
+    {
+        return end($this->seasons);
     }
 }

@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Entity\Game;
+namespace App\Entity\Game\Core;
 
+use App\Entity\Game\GameVersion;
+use App\Entity\Game\Traits\GameIdAwareTrait;
+use App\Entity\Game\Traits\GameVersionAwareTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"})})
  */
 class PlayerName
 {
-    use GameVersionTrait;
-    use GameIdTrait;
+    use GameVersionAwareTrait;
+    use GameIdAwareTrait;
 
     /**
      * @var UuidInterface

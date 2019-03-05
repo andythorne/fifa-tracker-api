@@ -34,6 +34,20 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
 
-    App\Import\SaveGameImportProcessor:
-        arguments:
-            $importers: !tagged 'importer.saved-game'
+    App\Import\Importer\SeasonImporter:
+        tags: [{name: 'importer.saved-game', priority: 90}]
+
+    App\Import\Importer\PlayerTeamImporter:
+        tags: [{name: 'importer.saved-game', priority: 90}]
+
+    App\Import\Importer\CareerImporter:
+        tags: [{name: 'importer.saved-game', priority: 100}]
+
+    App\Import\Importer\PlayerImporter:
+        tags: [{name: 'importer.saved-game', priority: 900}]
+
+    App\Import\Importer\TeamImporter:
+        tags: [{name: 'importer.saved-game', priority: 1000}]
+
+    App\Import\Importer\LeagueImporter:
+        tags: [{name: 'importer.saved-game', priority: 1000}]

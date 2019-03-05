@@ -49,6 +49,9 @@ services:
             - ./:/var/www/html:cached
             - vendor:/var/www/html/vendor:delegated
             - appcache:/var/www/html/var
+        environment:
+            PHP_IDE_CONFIG: serverName=api.fifatracker.dev
+            XDEBUG_CONFIG: remote_host=host.docker.internal remote_connect_back=0
         networks:
             fifatrackerinternal:
 

@@ -2,9 +2,9 @@
 
 namespace App\Import\Importer;
 
-use App\Entity\Game\Career;
+use App\Entity\Game\Career\Career;
+use App\Entity\Game\Core\Nation;
 use App\Entity\Game\Import\Import;
-use App\Entity\Game\Nation;
 use App\Import\CsvProcessor;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -25,11 +25,6 @@ class CareerImporter implements ImporterInterface
         $this->csvProcessor = $csvProcessor;
     }
 
-    public function supports(Career $career)
-    {
-        return $career->getGameVersion()->getYear() <= 18;
-    }
-
     public function import(Import $import, string $path)
     {
         $file = $path.'career_users.csv';
@@ -47,5 +42,15 @@ class CareerImporter implements ImporterInterface
 
             yield $career;
         }
+    }
+
+    public function supports(Career $career): bool
+    {
+        return $career->getGameVersion()->getYear() <= 18;
+    }
+
+    public function cleanup(): array
+    {
+        return [];
     }
 }
