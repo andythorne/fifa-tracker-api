@@ -2,14 +2,23 @@
 
 namespace App\Entity\Game\Career\Season;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\Career\Career;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     attributes={
+ *      "normalization_context"={"groups"={"read"}},
+ *      "denormalization_context"={"groups"={"write"}}
+ *     }
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\Season\SeasonRepository")
  */
 class Season
 {
@@ -20,6 +29,8 @@ class Season
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -36,14 +47,18 @@ class Season
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="season_year", type="integer")
+     *
+     * @Groups({"read"})
      */
     private $year;
 
     /**
      * @var DateTimeImmutable
      *
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(name="season_date", type="datetime_immutable")
+     *
+     * @Groups({"read"})
      */
     private $currentDate;
 

@@ -39,6 +39,7 @@ class ImportSavedGameCommand extends Command
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User email to add to')
             ->addOption('game-year', null, InputOption::VALUE_OPTIONAL, 'Game year version')
             ->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Name of the new career')
+            ->addOption('importer', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Importers to run', [])
         ;
     }
 

@@ -7,6 +7,7 @@ use App\Entity\Game\Career\CareerPlayer;
 use App\Entity\Game\Career\Season\SeasonPlayerTournamentStats;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Career\CareerPlayerRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class SeasonPlayerTournamentStatsImporter implements ImporterInterface
@@ -14,12 +15,19 @@ class SeasonPlayerTournamentStatsImporter implements ImporterInterface
     /** @var ObjectManager */
     private $objectManager;
 
+    /** @var CareerPlayerRepository */
+    private $careerPlayerRepository;
+
     /** @var CsvProcessor */
     private $csvProcessor;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
-    {
+    public function __construct(
+        ObjectManager $objectManager,
+        CareerPlayerRepository $careerPlayerRepository,
+        CsvProcessor $csvProcessor
+    ) {
         $this->objectManager = $objectManager;
+        $this->careerPlayerRepository = $careerPlayerRepository;
         $this->csvProcessor = $csvProcessor;
     }
 
@@ -28,28 +36,29 @@ class SeasonPlayerTournamentStatsImporter implements ImporterInterface
         $file = $path.'career_compdata_playerstats.csv';
 
         $seasonPlayerTournamentStatsRepository = $this->objectManager->getRepository(SeasonPlayerTournamentStats::class);
-        $careerPlayerRepository = $this->objectManager->getRepository(CareerPlayer::class);
-
-        $season = $import->getCareer()->getCurrentSeason();
 
         $playerGroupedData = [];
         foreach ($this->csvProcessor->readLine($file) as $row) {
             $playerId = $row['playerid'];
-            $playerGroupedData[$playerId]['unk1'] += $row['unk1'];
-            $playerGroupedData[$playerId]['avg'] += $row['avg'];
-            $playerGroupedData[$playerId]['app'] += $row['app'];
-            $playerGroupedData[$playerId]['goals'] += $row['goals'];
-            $playerGroupedData[$playerId]['assists'] += $row['assists'];
-            $playerGroupedData[$playerId]['yellowcards'] += $row['yellowcards'];
-            $playerGroupedData[$playerId]['redcards'] += $row['redcards'];
-            $playerGroupedData[$playerId]['cleansheets'] += $row['cleansheets'];
+
+            if (!isset($playerGroupedData[$playerId])) {
+                $playerGroupedData[$playerId] = $row;
+            } else {
+                $playerGroupedData[$playerId]['unk1'] += $row['unk1'];
+                $playerGroupedData[$playerId]['avg'] += $row['avg'];
+                $playerGroupedData[$playerId]['app'] += $row['app'];
+                $playerGroupedData[$playerId]['goals'] += $row['goals'];
+                $playerGroupedData[$playerId]['assists'] += $row['assists'];
+                $playerGroupedData[$playerId]['yellowcards'] += $row['yellowcards'];
+                $playerGroupedData[$playerId]['redcards'] += $row['redcards'];
+                $playerGroupedData[$playerId]['cleansheets'] += $row['cleansheets'];
+            }
         }
 
         foreach ($playerGroupedData as $playerId => $playerData) {
-            $careerPlayer = $careerPlayerRepository->findOneBy([
-                'player.gameId' => (int) $playerId,
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
+            $careerPlayer = $this->careerPlayerRepository->findOneForCareerAndPlayerId($import->getCareer(), (int) $row['playerid']);
+
+            $season = $careerPlayer->getCareer()->getCurrentSeason();
 
             $seasonPlayerTournamentStats = $seasonPlayerTournamentStatsRepository->findOneBy([
                 'season' => $season,
@@ -78,11 +87,9 @@ class SeasonPlayerTournamentStatsImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    public function cleanup(ObjectManager $objectManager): void
     {
-        return [
-            SeasonPlayerTournamentStats::class,
-            CareerPlayer::class,
-        ];
+        $this->objectManager->clear(SeasonPlayerTournamentStats::class);
+        $this->objectManager->clear(CareerPlayer::class);
     }
 }

@@ -4,13 +4,13 @@ namespace App\Entity\Game\Career;
 
 use App\Entity\Game\Core\Player;
 use App\Entity\Game\Core\PlayerContract;
-use App\Entity\Game\Season\Core\Team;
+use App\Entity\Game\Core\Team;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\CareerPlayerRepository")
  */
 class CareerPlayer
 {
@@ -56,7 +56,7 @@ class CareerPlayer
      *
      * @ORM\OneToOne(
      *     targetEntity="App\Entity\Game\Career\CareerPlayerAttributes",
-     *     cascade={"persist"}
+     *     cascade={"persist", "detach"}
      * )
      */
     private $playerAttributes;
@@ -66,7 +66,7 @@ class CareerPlayer
      *
      * @ORM\OneToOne(
      *     targetEntity="App\Entity\Game\Core\PlayerContract",
-     *     cascade={"persist"}
+     *     cascade={"persist", "detach"}
      * )
      */
     private $activeContract;
@@ -84,11 +84,6 @@ class CareerPlayer
         $this->career = $career;
         $this->player = $player;
         $this->playerAttributes = new CareerPlayerAttributes();
-    }
-
-    public function __toString()
-    {
-        return $this->player->getFirstName() . ' ' . $this->player->getSurname();
     }
 
     public function getId(): UuidInterface

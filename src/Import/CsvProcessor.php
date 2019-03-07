@@ -10,7 +10,7 @@ class CsvProcessor
             $row = 0;
             $headers = [];
 
-            while (($data = fgetcsv($handle, 5000, ',')) !== false) {
+            while (($data = fgetcsv($handle, 2000, ',')) !== false) {
                 ++$row;
                 if ($row === 1) {
                     $headers = $data;
@@ -18,6 +18,7 @@ class CsvProcessor
                 }
 
                 yield array_combine($headers, $data);
+                unset($data);
             }
             fclose($handle);
         }

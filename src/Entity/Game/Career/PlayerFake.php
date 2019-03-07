@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\PlayerFakeRepository")
  */
 class PlayerFake extends Player
 {
@@ -27,6 +27,24 @@ class PlayerFake extends Player
         parent::__construct($gameVersion, $gameId, $firstName, $surname, $commonName, $nationality, $height, $weight, $dateOfBirth, $position);
 
         $this->career = $career;
+        $this->realPlayer = false;
+    }
+
+    public static function fromPlayerReal(Career $career, Player $player, string $firstName, string $surname, string $commonName, DateTimeImmutable $dateOfBirth): PlayerFake
+    {
+        return new PlayerFake(
+            $player->getGameVersion(),
+            $player->getGameId(),
+            $career,
+            $firstName,
+            $surname,
+            $commonName,
+            $player->getNationality(),
+            $player->getHeight(),
+            $player->getWeight(),
+            $dateOfBirth,
+            $player->getPosition()
+        );
     }
 
     public function getCareer(): Career

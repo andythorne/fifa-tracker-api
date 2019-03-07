@@ -2,6 +2,8 @@
 
 namespace App\Entity\Game\Career;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Game\Career\Season\Season;
 use App\Entity\Game\Core\Nation;
 use App\Entity\Game\GameVersion;
@@ -12,9 +14,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity()
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get", "put"},
+ *     attributes={
+ *      "normalization_context"={"groups"={"read"}},
+ *      "denormalization_context"={"groups"={"write"}}
+ *     }
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\CareerRepository")
  */
 class Career
 {
@@ -28,6 +39,8 @@ class Career
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -35,6 +48,7 @@ class Career
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Groups({"read", "write"})
      */
     private $name;
 
@@ -42,6 +56,7 @@ class Career
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Groups({"read"})
      */
     private $firstName;
 
@@ -49,6 +64,7 @@ class Career
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Groups({"read"})
      */
     private $surname;
 
@@ -58,6 +74,7 @@ class Career
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Game\Core\Nation"
      * )
+     * @Groups({"read"})
      */
     private $nationality;
 
@@ -77,6 +94,8 @@ class Career
      *     targetEntity="App\Entity\Game\Career\Season\Season",
      *     mappedBy="career"
      * )
+     * @ApiSubresource()
+     * @Groups({"read"})
      */
     private $seasons;
 
@@ -131,13 +150,18 @@ class Career
         return $this->user;
     }
 
-    public function getSeasons(): array
+    public function getSeasons()
     {
         return $this->seasons;
     }
 
     public function getCurrentSeason(): Season
     {
-        return end($this->seasons);
+        return $this->seasons->last();
+    }
+
+    public function currentSeasonOffset(): int
+    {
+        return count($this->seasons);
     }
 }

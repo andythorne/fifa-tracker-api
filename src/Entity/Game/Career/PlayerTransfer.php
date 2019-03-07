@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\PlayerTransferRepository")
  */
 class PlayerTransfer
 {
@@ -79,9 +79,9 @@ class PlayerTransfer
     private $signedAt;
 
     /**
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      *
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="date_immutable", nullable=true)
      */
     private $joinedAt;
 
@@ -92,7 +92,7 @@ class PlayerTransfer
      */
     private $isPreContract;
 
-    public function __construct(Import $import, int $gameId, CareerPlayer $careerPlayer, Team $teamFrom, Team $teamTo, ?CareerPlayer $exchangePlayer, int $transferFee, DateTimeImmutable $signedAt, DateTimeImmutable $joinedAt, bool $isPreContract)
+    public function __construct(Import $import, int $gameId, CareerPlayer $careerPlayer, ?Team $teamFrom, Team $teamTo, ?CareerPlayer $exchangePlayer, int $transferFee, DateTimeImmutable $signedAt, ?DateTimeImmutable $joinedAt, bool $isPreContract)
     {
         $this->id = Uuid::uuid4();
         $this->import = $import;
@@ -117,7 +117,7 @@ class PlayerTransfer
         return $this->careerPlayer;
     }
 
-    public function getTeamFrom(): Team
+    public function getTeamFrom(): ?Team
     {
         return $this->teamFrom;
     }
@@ -127,7 +127,7 @@ class PlayerTransfer
         return $this->teamTo;
     }
 
-    public function getExchangePlayer(): ?Player
+    public function getExchangePlayer(): ?CareerPlayer
     {
         return $this->exchangePlayer;
     }
@@ -142,7 +142,7 @@ class PlayerTransfer
         return $this->signedAt;
     }
 
-    public function getJoinedAt(): DateTimeImmutable
+    public function getJoinedAt(): ?DateTimeImmutable
     {
         return $this->joinedAt;
     }

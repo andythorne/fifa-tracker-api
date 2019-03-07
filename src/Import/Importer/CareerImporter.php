@@ -3,45 +3,27 @@
 namespace App\Import\Importer;
 
 use App\Entity\Game\Career\Career;
-use App\Entity\Game\Core\Nation;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Core\NationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class CareerImporter implements ImporterInterface
+class CareerImporter extends AbstractCsvImporter
 {
-    public const ROW_MAP = [
-    ];
+    protected static $csvFile = 'career_users.csv';
 
     /** @var ObjectManager */
     private $objectManager;
 
-    /** @var CsvProcessor */
-    private $csvProcessor;
+    /** @var NationRepository */
+    private $nationRepository;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
+    public function __construct(ObjectManager $objectManager, NationRepository $nationRepository, CsvProcessor $csvProcessor)
     {
+        parent::__construct($csvProcessor);
+
+        $this->nationRepository = $nationRepository;
         $this->objectManager = $objectManager;
-        $this->csvProcessor = $csvProcessor;
-    }
-
-    public function import(Import $import, string $path)
-    {
-        $file = $path.'career_users.csv';
-
-        $nationalityRepository = $this->objectManager->getRepository(Nation::class);
-        $career = $import->getCareer();
-
-        foreach ($this->csvProcessor->readLine($file) as $row) {
-            $career->updateFromSave(
-                (int) $row['userid'],
-                $row['firstname'],
-                $row['surname'],
-                $nationalityRepository->findOneByGameId($row['nationalityid'])
-            );
-
-            yield $career;
-        }
     }
 
     public function supports(Career $career): bool
@@ -49,8 +31,22 @@ class CareerImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    protected function processRow(Import $import, array $row): ?object
     {
-        return [];
+        $nationality = $this->nationRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            $row['nationalityid']
+        );
+        $this->objectManager->persist($nationality);
+
+        $career = $import->getCareer();
+        $career->updateFromSave(
+            (int) $row['userid'],
+            $row['firstname'],
+            $row['surname'],
+            $nationality
+        );
+
+        return $career;
     }
 }

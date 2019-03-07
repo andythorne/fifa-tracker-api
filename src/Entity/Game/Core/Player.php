@@ -11,10 +11,10 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Core\PlayerRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"})})
+ * @ ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"}, options={"where": "(real_player = true)"})})
  */
 class Player
 {
@@ -88,6 +88,13 @@ class Player
      * @ORM\Column(type="string", length=3)
      */
     protected $position;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $realPlayer = true;
 
     public function __construct(GameVersion $gameVersion, int $gameId, ?string $firstName, ?string $surname, ?string $commonName, Nation $nationality, int $height, int $weight, DateTimeImmutable $dateOfBirth, string $position)
     {

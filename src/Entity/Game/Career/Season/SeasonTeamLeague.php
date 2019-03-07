@@ -2,16 +2,44 @@
 
 namespace App\Entity\Game\Career\Season;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\Core\League;
+use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
 use App\Entity\Game\Import\ImportAwareTrait;
-use App\Entity\Game\Season\Core\Team;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity()
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={
+ *          "season_league"={
+ *             "method"="GET",
+ *             "path"="/seasons/{id}/leagues/{league}",
+ *             "controller"=App\Controller\Game\SeasonController::class,
+ *             "defaults"={
+ *              "_api_receive"=false,
+ *             },
+ *          },
+ *          "seasonTeam"={
+ *             "method"="GET",
+ *             "path"="/seasons/{id}/teams/{team}",
+ *             "controller"=App\Controller\Game\SeasonController::class,
+ *             "defaults"={
+ *              "_api_receive"=false,
+ *             },
+ *          }
+ *     },
+ *     attributes={
+ *      "normalization_context"={"groups"={"read"}},
+ *      "denormalization_context"={"groups"={"write"}}
+ *     }
+ * )
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Career\Season\SeasonTeamLeagueRepository")
  */
 class SeasonTeamLeague
 {
@@ -24,6 +52,8 @@ class SeasonTeamLeague
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -42,6 +72,8 @@ class SeasonTeamLeague
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Game\Core\Team"
      * )
+     *
+     * @Groups({"read"})
      */
     private $team;
 
@@ -51,28 +83,83 @@ class SeasonTeamLeague
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Game\Core\League"
      * )
+     *
+     * @Groups({"read"})
      */
     private $league;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
+     *
+     * @Groups({"read"})
      */
     private $position;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $played = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $homeWon = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $homeDrawn = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $homeLost = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $homeGoalsFor = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $homeGoalsAgainst = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $awayWon = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $awayDrawn = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $awayLost = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $awayGoalsFor = 0;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $awayGoalsAgainst = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read"})
+     */
     private $points = 0;
 
     public function __construct(Import $import, Season $season, Team $team, League $league)

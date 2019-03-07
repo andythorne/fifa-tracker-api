@@ -7,44 +7,29 @@ use App\Entity\Game\Career\CareerPlayer;
 use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Career\CareerPlayerRepository;
+use App\Repository\Game\Core\TeamRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class PlayerTeamImporter implements ImporterInterface
+class PlayerTeamImporter extends AbstractCsvImporter
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    protected static $csvFile = 'teamplayerlinks.csv';
 
-    /** @var CsvProcessor */
-    private $csvProcessor;
+    /** @var CareerPlayerRepository */
+    private $careerPlayerRepository;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
-    {
-        $this->objectManager = $objectManager;
-        $this->csvProcessor = $csvProcessor;
-    }
+    /** @var TeamRepository */
+    private $teamRepository;
 
-    public function import(Import $import, string $path)
-    {
-        $file = $path.'teamplayerlinks.csv';
+    public function __construct(
+        CareerPlayerRepository $careerPlayerRepository,
+        TeamRepository $teamRepository,
+        CsvProcessor $csvProcessor
+    ) {
+        parent::__construct($csvProcessor);
 
-        $careerPlayerRepository = $this->objectManager->getRepository(CareerPlayer::class);
-        $teamRepository = $this->objectManager->getRepository(Team::class);
-
-        foreach ($this->csvProcessor->readLine($file) as $row) {
-            $careerPlayer = $careerPlayerRepository->findOneBy([
-                'career' => $import->getCareer(),
-                'player.gameId' => (int) $row['playerid'],
-            ]);
-
-            $team = $teamRepository->findOneBy([
-                'gameId' => (int) $row['teamid'],
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
-
-            $careerPlayer->setTeam($team);
-
-            yield $careerPlayer;
-        }
+        $this->careerPlayerRepository = $careerPlayerRepository;
+        $this->teamRepository = $teamRepository;
     }
 
     public function supports(Career $career): bool
@@ -52,11 +37,30 @@ class PlayerTeamImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    public function cleanup(ObjectManager $objectManager): void
     {
-        return [
-            CareerPlayer::class,
-            Team::class,
-        ];
+        $objectManager->clear(CareerPlayer::class);
+        $objectManager->clear(Team::class);
+    }
+
+    protected function processRow(Import $import, array $row): ?object
+    {
+        $careerPlayer = $this->careerPlayerRepository->findOneForCareerAndPlayerId(
+            $import->getCareer(),
+            (int) $row['playerid']
+        );
+
+        if (!$careerPlayer instanceof CareerPlayer) {
+            throw new \RuntimeException('CareerPlayer not imported yet.');
+        }
+
+        $team = $this->teamRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            (int) $row['teamid']
+        );
+
+        $careerPlayer->setTeam($team);
+
+        return $careerPlayer;
     }
 }

@@ -2,15 +2,26 @@
 
 namespace App\Entity\Game\Core;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\GameVersion;
 use App\Entity\Game\Traits\GameIdAwareTrait;
 use App\Entity\Game\Traits\GameVersionAwareTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity()
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     attributes={
+ *      "normalization_context"={"groups"={"read"}},
+ *      "denormalization_context"={"groups"={"write"}}
+ *     }
+ * )
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\Game\Core\LeagueRepository")
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"})})
  */
 class League
@@ -25,6 +36,8 @@ class League
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -32,6 +45,8 @@ class League
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @Groups({"read"})
      */
     private $name;
 
@@ -39,6 +54,8 @@ class League
      * @var int
      *
      * @ORM\Column(type="smallint")
+     *
+     * @Groups({"read"})
      */
     private $tier;
 
@@ -48,6 +65,8 @@ class League
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Game\Core\Nation"
      * )
+     *
+     * @Groups({"read"})
      */
     private $nation;
 

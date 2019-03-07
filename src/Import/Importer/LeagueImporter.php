@@ -4,56 +4,28 @@ namespace App\Import\Importer;
 
 use App\Entity\Game\Career\Career;
 use App\Entity\Game\Core\League;
-use App\Entity\Game\Core\Nation;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Core\LeagueRepository;
+use App\Repository\Game\Core\NationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LeagueImporter implements ImporterInterface
+class LeagueImporter extends AbstractCsvImporter
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    protected static $csvFile = 'leagues.csv';
 
-    /** @var CsvProcessor */
-    private $csvProcessor;
+    /** @var LeagueRepository */
+    private $leagueRepository;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
+    /** @var NationRepository */
+    private $nationRepository;
+
+    public function __construct(LeagueRepository $leagueRepository, NationRepository $nationRepository, CsvProcessor $csvProcessor)
     {
-        $this->objectManager = $objectManager;
-        $this->csvProcessor = $csvProcessor;
-    }
+        parent::__construct($csvProcessor);
 
-    public function import(Import $import, string $path)
-    {
-        $file = $path.'leagues.csv';
-
-        $leagueRepository = $this->objectManager->getRepository(League::class);
-        $nationRepository = $this->objectManager->getRepository(Nation::class);
-
-        foreach ($this->csvProcessor->readLine($file) as $row) {
-            $id = (int) $row['leagueid'];
-
-            /** @var League $currentRecord */
-            $currentRecord = $leagueRepository->findOneBy([
-                'gameId' => $id,
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
-
-            if (!$currentRecord instanceof League) {
-                $nation = $nationRepository->findOneBy([
-                    'gameId' => (int) $row['countryid'],
-                    'gameVersion' => $import->getCareer()->getGameVersion(),
-                ]);
-
-                yield new League(
-                    $import->getCareer()->getGameVersion(),
-                    $id,
-                    $row['leaguename'],
-                    $row['level'],
-                    $nation
-                );
-            }
-        }
+        $this->leagueRepository = $leagueRepository;
+        $this->nationRepository = $nationRepository;
     }
 
     public function supports(Career $career): bool
@@ -61,11 +33,36 @@ class LeagueImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    public function cleanup(ObjectManager $objectManager): void
     {
-        return [
-            Nation::class,
-            League::class,
-        ];
+        $objectManager->clear(League::class);
+    }
+
+    protected function processRow(Import $import, array $row): ?object
+    {
+        $id = (int) $row['leagueid'];
+
+        /** @var League $currentRecord */
+        $currentRecord = $this->leagueRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            $id
+        );
+
+        if ($currentRecord instanceof League) {
+            return null;
+        }
+
+        $nation = $this->nationRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            (int) $row['countryid']
+        );
+
+        return new League(
+            $import->getCareer()->getGameVersion(),
+            $id,
+            $row['leaguename'],
+            $row['level'],
+            $nation
+        );
     }
 }

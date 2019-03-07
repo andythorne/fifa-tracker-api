@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DependencyInjection\CompilerPass;
+namespace App\DependencyInjection\Compiler;
 
 use App\Import\SaveGameImportProcessor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -16,7 +16,6 @@ class ImporterPass implements CompilerPassInterface
         $services = $this->findAndSortTaggedServices('importer.saved-game', $container);
 
         $processorService = $container->findDefinition(SaveGameImportProcessor::class);
-        $processorService->setArgument(2, $services);
+        $processorService->setArgument('$importers', $services);
     }
-
 }

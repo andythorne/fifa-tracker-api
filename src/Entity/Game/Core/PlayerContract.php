@@ -27,7 +27,8 @@ class PlayerContract
      * @var CareerPlayer
      *
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Game\Career\CareerPlayer"
+     *     targetEntity="App\Entity\Game\Career\CareerPlayer",
+     *     cascade={"detach"}
      * )
      */
     protected $careerPlayer;

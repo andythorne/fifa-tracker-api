@@ -6,46 +6,22 @@ use App\Entity\Game\Career\Career;
 use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Core\TeamRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class TeamImporter implements ImporterInterface
+class TeamImporter extends AbstractCsvImporter
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    protected static $csvFile = 'teams.csv';
+    /** @var TeamRepository */
+    private $teamRepository;
 
-    /** @var CsvProcessor */
-    private $csvProcessor;
+    public function __construct(
+        TeamRepository $teamRepository,
+        CsvProcessor $csvProcessor
+    ) {
+        parent::__construct($csvProcessor);
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
-    {
-        $this->objectManager = $objectManager;
-        $this->csvProcessor = $csvProcessor;
-    }
-
-    public function import(Import $import, string $path)
-    {
-        $file = $path.'teams.csv';
-
-        $careerTeamRepository = $this->objectManager->getRepository(Team::class);
-
-        foreach ($this->csvProcessor->readLine($file) as $row) {
-            $teamId = (int) $row['teamid'];
-
-            /** @var Team $currentRecord */
-            $currentRecord = $careerTeamRepository->findOneByGameId($teamId);
-
-            if (!$currentRecord instanceof Team) {
-                yield new Team(
-                    $import->getCareer()->getGameVersion(),
-                    $teamId,
-                    $row['teamname'],
-                    $row['foundationyear'],
-                    sprintf('#%02x%02x%02x', (int) $row['teamcolor1r'], (int) $row['teamcolor1g'], (int) $row['teamcolor1b']),
-                    sprintf('#%02x%02x%02x', (int) $row['teamcolor2r'], (int) $row['teamcolor2g'], (int) $row['teamcolor2b']),
-                    sprintf('#%02x%02x%02x', (int) $row['teamcolor3r'], (int) $row['teamcolor3g'], (int) $row['teamcolor3b'])
-                );
-            }
-        }
+        $this->teamRepository = $teamRepository;
     }
 
     public function supports(Career $career): bool
@@ -53,10 +29,30 @@ class TeamImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    public function cleanup(ObjectManager $objectManager): void
     {
-        return [
-            Team::class,
-        ];
+        $objectManager->clear(Team::class);
+    }
+
+    protected function processRow(Import $import, array $row): ?object
+    {
+        $teamId = (int) $row['teamid'];
+
+        /** @var Team $currentRecord */
+        $currentRecord = $this->teamRepository->findOneByGame($import->getCareer()->getGameVersion(), $teamId);
+
+        if ($currentRecord instanceof Team) {
+            return null;
+        }
+
+        return new Team(
+            $import->getCareer()->getGameVersion(),
+            $teamId,
+            $row['teamname'],
+            $row['foundationyear'],
+            sprintf('#%02x%02x%02x', (int) $row['teamcolor1r'], (int) $row['teamcolor1g'], (int) $row['teamcolor1b']),
+            sprintf('#%02x%02x%02x', (int) $row['teamcolor2r'], (int) $row['teamcolor2g'], (int) $row['teamcolor2b']),
+            sprintf('#%02x%02x%02x', (int) $row['teamcolor3r'], (int) $row['teamcolor3g'], (int) $row['teamcolor3b'])
+        );
     }
 }

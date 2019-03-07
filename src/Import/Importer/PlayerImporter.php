@@ -5,13 +5,19 @@ namespace App\Import\Importer;
 use App\Entity\Game\Career\Career;
 use App\Entity\Game\Career\CareerPlayer;
 use App\Entity\Game\Career\CareerPlayerAttributes;
-use App\Entity\Game\Core\Nation;
+use App\Entity\Game\Career\PlayerFake;
 use App\Entity\Game\Core\Player;
 use App\Entity\Game\Core\PlayerContract;
 use App\Entity\Game\Core\PlayerName;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
 use App\Import\Utils\FifaDateTransformer;
+use App\Repository\Game\Career\CareerPlayerRepository;
+use App\Repository\Game\Career\CareerRepository;
+use App\Repository\Game\Career\PlayerFakeRepository;
+use App\Repository\Game\Core\NationRepository;
+use App\Repository\Game\Core\PlayerNameRepository;
+use App\Repository\Game\Core\PlayerRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class PlayerImporter implements ImporterInterface
@@ -19,59 +25,105 @@ class PlayerImporter implements ImporterInterface
     /** @var ObjectManager */
     private $objectManager;
 
+    /** @var PlayerRepository */
+    private $playerRepository;
+
+    /** @var PlayerFakeRepository */
+    private $playerFakeRepository;
+
+    /** @var PlayerNameRepository */
+    private $playerNameRepository;
+
+    /** @var CareerRepository */
+    private $careerRepository;
+
+    /** @var CareerPlayerRepository */
+    private $careerPlayerRepository;
+
+    /** @var NationRepository */
+    private $nationRepository;
+
     /** @var CsvProcessor */
     private $csvProcessor;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
-    {
+    public function __construct(
+        ObjectManager $objectManager,
+        PlayerRepository $playerRepository,
+        PlayerFakeRepository $playerFakeRepository,
+        PlayerNameRepository $playerNameRepository,
+        CareerRepository $careerRepository,
+        CareerPlayerRepository $careerPlayerRepository,
+        NationRepository $nationRepository,
+        CsvProcessor $csvProcessor
+    ) {
         $this->objectManager = $objectManager;
+        $this->playerRepository = $playerRepository;
+        $this->playerFakeRepository = $playerFakeRepository;
+        $this->playerNameRepository = $playerNameRepository;
+        $this->careerRepository = $careerRepository;
+        $this->careerPlayerRepository = $careerPlayerRepository;
+        $this->nationRepository = $nationRepository;
         $this->csvProcessor = $csvProcessor;
+    }
+
+    public function supports(Career $career): bool
+    {
+        return $career->getGameVersion()->getYear() <= 18;
+    }
+
+    public function cleanup(ObjectManager $objectManager): void
+    {
+        $objectManager->clear(PlayerName::class);
+        $objectManager->clear(CareerPlayerAttributes::class);
+        $objectManager->clear(PlayerContract::class);
+        $objectManager->clear(Player::class);
+        $objectManager->clear(CareerPlayer::class);
     }
 
     public function import(Import $import, string $path)
     {
-        $file = $path.'players.csv';
+        // map all the fake players
+        $fakePlayerMap = [];
+        foreach ($this->csvProcessor->readLine($path.'/editedplayernames.csv') as $row) {
+            $fakePlayerMap[(int) $row['playerid']] = $row;
+        }
 
-        $playerRepository = $this->objectManager->getRepository(Player::class);
-        $careerPlayerRepository = $this->objectManager->getRepository(CareerPlayer::class);
-        $playerNameRepository = $this->objectManager->getRepository(PlayerName::class);
-        $nationRepository = $this->objectManager->getRepository(Nation::class);
-
-        foreach ($this->csvProcessor->readLine($file) as $row) {
+        foreach ($this->csvProcessor->readLine($path.'/players.csv') as $row) {
             $playerId = (int) $row['playerid'];
 
             /** @var Player $currentRecord */
-            $player = $playerRepository->findOneBy([
-                'gameId' => $playerId,
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
+            $basePlayer = $this->playerRepository->findOneForCareer(
+                $import->getCareer()->getGameVersion(),
+                $playerId,
+                true
+            );
 
-            if (!$player instanceof Player) {
-                $nation = $nationRepository->findOneBy([
-                    'gameId' => (int) $row['nationality'],
-                    'gameVersion' => $import->getCareer()->getGameVersion(),
-                ]);
+            if (!$basePlayer instanceof Player) {
+                $nation = $this->nationRepository->findOneByGame(
+                    $import->getCareer()->getGameVersion(),
+                    (int) $row['nationality']
+                );
 
-                $firstName = $playerNameRepository->findOneBy([
-                    'gameId' => (int) $row['firstnameid'],
-                    'gameVersion' => $import->getCareer()->getGameVersion(),
-                ]);
+                $firstName = $this->playerNameRepository->findOneByGame(
+                    $import->getCareer()->getGameVersion(),
+                    (int) $row['firstnameid']
+                );
 
-                $secondName = $playerNameRepository->findOneBy([
-                    'gameId' => (int) $row['lastnameid'],
-                    'gameVersion' => $import->getCareer()->getGameVersion(),
-                ]);
+                $surname = $this->playerNameRepository->findOneByGame(
+                    $import->getCareer()->getGameVersion(),
+                    (int) $row['lastnameid']
+                );
 
-                $commonName = $playerNameRepository->findOneBy([
-                    'gameId' => (int) $row['commonnameid'],
-                    'gameVersion' => $import->getCareer()->getGameVersion(),
-                ]);
+                $commonName = $this->playerNameRepository->findOneByGame(
+                    $import->getCareer()->getGameVersion(),
+                    (int) $row['commonnameid']
+                );
 
-                $player = new Player(
+                $basePlayer = new Player(
                     $import->getCareer()->getGameVersion(),
                     $playerId,
                     $firstName ? $firstName->getName() : '',
-                    $secondName ? $secondName->getName() : '',
+                    $surname ? $surname->getName() : '',
                     $commonName ? $commonName->getName() : '',
                     $nation,
                     $row['height'],
@@ -80,17 +132,79 @@ class PlayerImporter implements ImporterInterface
                     (int) $row['preferredposition1']
                 );
 
-                $this->objectManager->persist($player);
+                $this->objectManager->persist($basePlayer);
+            }
+
+            // TODO: is this how we identify regens?!
+            if (((int) $row['firstnameid']) === 0 && ((int) $row['lastnameid']) === 0) {
+                // try find the the current regen
+
+                if (!isset($fakePlayerMap[$playerId])) {
+                    throw new \Exception('Cannot find fake player');
+                }
+
+                // retire the original CareerPlayer
+                $baseCareerPlayer = $this->careerPlayerRepository->findOneBy([
+                    'player' => $basePlayer,
+                    'career' => $import->getCareer(),
+                    'isRetired' => false,
+                ]);
+                if ($baseCareerPlayer instanceof CareerPlayer) {
+                    $baseCareerPlayer->retire();
+                    $this->objectManager->persist($baseCareerPlayer);
+                }
+
+                $fakePlayerInfo = $fakePlayerMap[$playerId];
+
+                /** @var PlayerName $firstName */
+//                $firstName = $this->playerNameRepository->findOneForCareerAndPlayerId(
+//                    $import->getCareer()->getGameVersion(),
+//                    (int) $fakePlayerInfo['firstnameid']
+//                );
+
+                /** @var PlayerName $surname */
+//                $surname = $this->playerNameRepository->findOneForCareerAndPlayerId(
+//                    $import->getCareer()->getGameVersion(),
+//                    (int) $fakePlayerInfo['lastnameid']
+//                );
+
+                $regenPlayer = $this->playerFakeRepository->findOneBy([
+                    'gameVersion' => $import->getCareer()->getGameVersion(),
+                    'gameId' => (int) $row['playerid'],
+                    'firstName' => $fakePlayerInfo['firstname'] ?? '',
+                    'surname' => $fakePlayerInfo['surname'] ?? '',
+                    'realPlayer' => false,
+                ]);
+
+                if (!$regenPlayer instanceof PlayerFake) {
+//                    $commonName = $this->playerNameRepository->findOneForCareerAndPlayerId(
+//                        $import->getCareer()->getGameVersion(),
+//                        (int) $fakePlayerInfo['commonnameid']
+//                    );
+
+                    $regenPlayer = PlayerFake::fromPlayerReal(
+                        $import->getCareer(),
+                        $basePlayer,
+                        $fakePlayerInfo['firstname'] ?? '',
+                        $fakePlayerInfo['surname'] ?? '',
+                        $fakePlayerInfo['commonname'] ?? '',
+                        FifaDateTransformer::transformToDate($row['birthdate'])
+                    );
+
+                    $this->objectManager->persist($regenPlayer);
+                }
+
+                $basePlayer = $regenPlayer;
             }
 
             /** @var CareerPlayer $careerPlayer */
-            $careerPlayer = $careerPlayerRepository->findOneBy([
-                'player' => $player,
+            $careerPlayer = $this->careerPlayerRepository->findOneBy([
+                'player' => $basePlayer,
                 'career' => $import->getCareer(),
             ]);
 
             if (!$careerPlayer instanceof CareerPlayer) {
-                $careerPlayer = new CareerPlayer($import->getCareer(), $player);
+                $careerPlayer = new CareerPlayer($import->getCareer(), $basePlayer);
             }
 
             $attributes = $careerPlayer->getPlayerAttributes();
@@ -133,8 +247,9 @@ class PlayerImporter implements ImporterInterface
 
             $contractExpiresAt = FifaDateTransformer::getFifaDate($row['contractvaliduntil']);
             /* @var PlayerContract $contract */
+            $contract = null;
             if ($careerPlayer->hasActiveContract()) {
-                if ($careerPlayer->getActiveContract()->getExpiresAt() !== $contractExpiresAt) {
+                if ($careerPlayer->getActiveContract()->getExpiresAt() != $contractExpiresAt) {
                     $contract = new PlayerContract($careerPlayer, $contractExpiresAt, 0, true);
                     $careerPlayer->setActiveContract($contract);
                 }
@@ -144,27 +259,6 @@ class PlayerImporter implements ImporterInterface
             }
 
             yield $careerPlayer;
-            $this->objectManager->detach($attributes);
-            $this->objectManager->detach($contract);
-            $this->objectManager->detach($careerPlayer);
-            $this->objectManager->detach($player);
         }
-    }
-
-    public function supports(Career $career): bool
-    {
-        return $career->getGameVersion()->getYear() <= 18;
-    }
-
-    public function cleanup(): array
-    {
-        return [
-            CareerPlayerAttributes::class,
-            PlayerContract::class,
-            Player::class,
-            CareerPlayer::class,
-            Nation::class,
-            PlayerName::class,
-        ];
     }
 }

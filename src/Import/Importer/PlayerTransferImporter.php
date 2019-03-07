@@ -8,81 +8,36 @@ use App\Entity\Game\Career\PlayerTransfer;
 use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
 use App\Import\CsvProcessor;
+use App\Repository\Game\Career\CareerPlayerRepository;
+use App\Repository\Game\Career\PlayerTransferRepository;
+use App\Repository\Game\Core\TeamRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class PlayerTransferImporter implements ImporterInterface
+class PlayerTransferImporter extends AbstractCsvImporter
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    protected static $csvFile = 'career_transferoffer.csv';
 
-    /** @var CsvProcessor */
-    private $csvProcessor;
+    /** @var CareerPlayerRepository */
+    private $careerPlayerRepository;
 
-    public function __construct(ObjectManager $objectManager, CsvProcessor $csvProcessor)
-    {
-        $this->objectManager = $objectManager;
-        $this->csvProcessor = $csvProcessor;
-    }
+    /** @var PlayerTransferRepository */
+    private $playerTransferRepository;
 
-    public function import(Import $import, string $path)
-    {
-        $file = $path.'career_transferoffer.csv';
+    /** @var TeamRepository */
+    private $teamRepository;
 
-        $playerTransferRepository = $this->objectManager->getRepository(PlayerTransfer::class);
-        $careerPlayerRepository = $this->objectManager->getRepository(CareerPlayer::class);
-        $teamRepository = $this->objectManager->getRepository(Team::class);
+    public function __construct(
+        CareerPlayerRepository $careerPlayerRepository,
+        PlayerTransferRepository $playerTransferRepository,
+        TeamRepository $teamRepository,
+        CsvProcessor $csvProcessor
+    ) {
+        parent::__construct($csvProcessor);
 
-        foreach ($this->csvProcessor->readLine($file) as $row) {
-            if ((int) $row['stage'] !== 2) {
-                continue;
-            }
-
-            $playerTransfer = $playerTransferRepository->findOneBy([
-                'gameId' => $row['offerid'],
-            ]);
-
-            if ($playerTransfer instanceof PlayerTransfer) {
-                continue;
-            }
-
-            $careerPlayer = $careerPlayerRepository->findOneBy([
-                'player.gameId' => (int) $row['playerid'],
-                'career' => $import->getCareer(),
-            ]);
-
-            $teamFrom = $teamRepository->findOneBy([
-                'gameId' => (int) $row['offerteamid'],
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
-
-            $teamTo = $teamRepository->findOneBy([
-                'gameId' => (int) $row['teamid'],
-                'gameVersion' => $import->getCareer()->getGameVersion(),
-            ]);
-
-            $exchangePlayer = null;
-            $exchangePlayerId = (int) $row['exchangeplayerid'];
-            if ($exchangePlayerId > 0) {
-                $exchangePlayer = $careerPlayerRepository->findOneBy([
-                    'player.gameId' => $exchangePlayerId,
-                    'career' => $import->getCareer(),
-                ]);
-            }
-
-            yield new PlayerTransfer(
-                $import,
-                (int) $row['offerid'],
-                $careerPlayer,
-                $teamFrom,
-                $teamTo,
-                $exchangePlayer,
-                (int) $row['offeredfee'],
-                DateTimeImmutable::createFromFormat('Ymd*', $row['date']),
-                DateTimeImmutable::createFromFormat('Ymd*', $row['startdate']),
-                $row['precontract'] === '1'
-            );
-        }
+        $this->careerPlayerRepository = $careerPlayerRepository;
+        $this->playerTransferRepository = $playerTransferRepository;
+        $this->teamRepository = $teamRepository;
     }
 
     public function supports(Career $career): bool
@@ -90,12 +45,60 @@ class PlayerTransferImporter implements ImporterInterface
         return $career->getGameVersion()->getYear() <= 18;
     }
 
-    public function cleanup(): array
+    public function cleanup(ObjectManager $objectManager): void
     {
-        return [
-            PlayerTransfer::class,
-            CareerPlayer::class,
-            Team::class,
-        ];
+        $objectManager->clear(PlayerTransfer::class);
+        $objectManager->clear(CareerPlayer::class);
+        $objectManager->clear(Team::class);
+    }
+
+    protected function processRow(Import $import, array $row): ?object
+    {
+        if ((int) $row['stage'] !== 2) {
+            return null;
+        }
+
+        // TODO: this is wrong!
+        $playerTransfer = $this->playerTransferRepository->findOneBy([
+            'gameId' => $row['offerid'],
+        ]);
+
+        if ($playerTransfer instanceof PlayerTransfer) {
+            return null;
+        }
+
+        $careerPlayer = $this->careerPlayerRepository->findOneForCareerAndPlayerId($import->getCareer(), (int) $row['playerid']);
+
+        $teamFrom = $this->teamRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            (int) $row['offerteamid']
+        );
+
+        $teamTo = $this->teamRepository->findOneByGame(
+            $import->getCareer()->getGameVersion(),
+            (int) $row['teamid']
+        );
+
+        $exchangePlayer = null;
+        $exchangePlayerId = (int) $row['exchangeplayerid'];
+        if ($exchangePlayerId > 0) {
+            $careerPlayer = $this->careerPlayerRepository->findOneForCareerAndPlayerId($import->getCareer(), (int) $row['playerid']);
+        }
+
+        $signedAt = DateTimeImmutable::createFromFormat('Ymd+', $row['date']);
+        $joinedAt = DateTimeImmutable::createFromFormat('Ymd+', $row['startdate']) ?: null;
+
+        return new PlayerTransfer(
+            $import,
+            (int) $row['offerid'],
+            $careerPlayer,
+            $teamFrom,
+            $teamTo,
+            $exchangePlayer,
+            (int) $row['offeredfee'],
+            $signedAt,
+            $joinedAt,
+            $row['precontract'] === '1'
+        );
     }
 }
