@@ -2,7 +2,6 @@
 
 namespace App\Entity\Game\Career\Season;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\Career\Career;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,13 +10,6 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     itemOperations={"get"},
- *     attributes={
- *      "normalization_context"={"groups"={"read"}},
- *      "denormalization_context"={"groups"={"write"}}
- *     }
- * )
  * @ORM\Entity(repositoryClass="App\Repository\Game\Career\Season\SeasonRepository")
  */
 class Season

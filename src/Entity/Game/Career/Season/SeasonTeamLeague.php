@@ -2,7 +2,6 @@
 
 namespace App\Entity\Game\Career\Season;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\Core\League;
 use App\Entity\Game\Core\Team;
 use App\Entity\Game\Import\Import;
@@ -13,32 +12,6 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={
- *          "season_league"={
- *             "method"="GET",
- *             "path"="/seasons/{id}/leagues/{league}",
- *             "controller"=App\Controller\Game\SeasonController::class,
- *             "defaults"={
- *              "_api_receive"=false,
- *             },
- *          },
- *          "seasonTeam"={
- *             "method"="GET",
- *             "path"="/seasons/{id}/teams/{team}",
- *             "controller"=App\Controller\Game\SeasonController::class,
- *             "defaults"={
- *              "_api_receive"=false,
- *             },
- *          }
- *     },
- *     attributes={
- *      "normalization_context"={"groups"={"read"}},
- *      "denormalization_context"={"groups"={"write"}}
- *     }
- * )
- *
  * @ORM\Entity(repositoryClass="App\Repository\Game\Career\Season\SeasonTeamLeagueRepository")
  */
 class SeasonTeamLeague

@@ -2,8 +2,6 @@
 
 namespace App\Entity\Game\Career;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Game\Career\Season\Season;
 use App\Entity\Game\Core\Nation;
 use App\Entity\Game\GameVersion;
@@ -12,23 +10,20 @@ use App\Entity\Game\Traits\GameVersionAwareTrait;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get", "put"},
- *     attributes={
- *      "normalization_context"={"groups"={"read"}},
- *      "denormalization_context"={"groups"={"write"}}
- *     }
- * )
  * @ORM\Entity(repositoryClass="App\Repository\Game\Career\CareerRepository")
  */
 class Career
 {
+    // TODO: enable these
+//    use BlameableEntity;
+//    use TimestampableEntity;
     use GameIdAwareTrait;
     use GameVersionAwareTrait;
 
@@ -94,7 +89,6 @@ class Career
      *     targetEntity="App\Entity\Game\Career\Season\Season",
      *     mappedBy="career"
      * )
-     * @ApiSubresource()
      * @Groups({"read"})
      */
     private $seasons;

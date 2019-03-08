@@ -2,7 +2,6 @@
 
 namespace App\Entity\Game\Core;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Game\GameVersion;
 use App\Entity\Game\Traits\GameIdAwareTrait;
 use App\Entity\Game\Traits\GameVersionAwareTrait;
@@ -12,15 +11,6 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"},
- *     attributes={
- *      "normalization_context"={"groups"={"read"}},
- *      "denormalization_context"={"groups"={"write"}}
- *     }
- * )
- *
  * @ORM\Entity(repositoryClass="App\Repository\Game\Core\LeagueRepository")
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"game_version_id", "game_id"})})
  */
